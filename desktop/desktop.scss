@@ -3,9 +3,23 @@
 // --------------------------------------------------
 
 .d-header {
+
+  height: 96px;
+  box-shadow: none;
+
+  .contents {
+    margin: 24px 0;
+  }
+
   .login-button,.sign-up-button {
     background: #ff5495;
   }
+
+    #site-logo {
+      max-height: 42px;
+    }
+
+
 
 
   .icons {
@@ -20,4 +34,9 @@
       }
     }
   }
+}
+
+// new stuff
+#main-outlet {
+  padding-top: 120px;
 }
