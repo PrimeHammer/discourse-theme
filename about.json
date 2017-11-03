@@ -1,4 +1,7 @@
 {
   "name": "Custom Discourse theme",
-  "about_url": "http://www.primehammer.com"
+  "about_url": "http://www.primehammer.com",
+   "assets": {
+        "partnersLogo": "assets/partners-logo.svg"
+   }
 }
