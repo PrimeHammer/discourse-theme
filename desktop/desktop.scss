@@ -30,7 +30,7 @@
     }
     .header-dropdown-toggle:first-of-type {
       .icon {
-        color: dark-light-choose(scale-color($header_primary, $lightness: 50%), $header_primary);
+        color: #999999;
       }
     }
   }
