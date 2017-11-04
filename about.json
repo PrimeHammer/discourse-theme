@@ -3,6 +3,8 @@
   "about_url": "http://www.primehammer.com",
    "assets": {
         "partnersLogo": "assets/partners-logo.png",
-        "pinkLogo": "assets/pink-logo.png"
+        "pinkLogo": "assets/pink-logo.png",
+        "leftCrowd": "assets/left-crowd.png",
+        "rightCrowd": "assets/right-crowd.png"
    }
 }
