@@ -81,6 +81,10 @@ html {
     padding: 12px 16px;
   }
 
+  .topics {
+    color: #222;
+  }
+
   tbody {
     .category {
       border-left: 5px solid;
@@ -90,12 +94,35 @@ html {
 
 .categories-and-latest {
   margin: 0px -16px 0 -14px;
+
+  .topic-list {
+    .num.posts a {
+      font-weight: normal;
+      color: #222;
+    }
+
+    .more-topics,
+    .no-topics {
+      td {
+        padding-right: 14px;
+      }
+    }
+  }
 }
 
 // desktop/topic-list.scss
 
 .category-logo {
   margin-top: 10px;
+}
+
+
+
+// Base list
+// --------------------------------------------------
+
+.topic-list {
+  .fa-thumb-tack { color: #3b84f8; }
 }
 
 // New elements added by theme
