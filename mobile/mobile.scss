@@ -1,0 +1,18 @@
+// --------------------------------------------------
+// Discourse header
+// --------------------------------------------------
+
+.d-header {
+  .icons {
+    .header-dropdown-toggle {
+      .icon {
+        color: #ff5495;
+      }
+    }
+    .header-dropdown-toggle:first-of-type {
+      .icon {
+        color: #999999;
+      }
+    }
+  }
+}
