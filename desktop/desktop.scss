@@ -33,7 +33,7 @@
 }
 
 #main-outlet {
-  padding-top: 99px;
+  padding-top: 96px + 3px + 8px;
   background-color: #fff;
 }
 
@@ -57,7 +57,6 @@ html {
   margin-left: -8px;
   margin-right: -8px;
   position: relative;
-  margin-bottom: 8px;
 
   #hero-section {
     padding-top: 47px;
