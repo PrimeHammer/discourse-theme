@@ -60,11 +60,28 @@ html {
   margin-bottom: 8px;
   margin-top: -8px;
 
+  @media (max-width: 780px) {
+    height: auto;
+  }
+
   #hero-section {
     padding-top: 47px;
+    padding-bottom: 47px;
     text-align: center;
     max-width: 660px;
     margin: 0 auto;
+    padding-left: 8px;
+    padding-right: 8px;
+
+    @media (max-width: 1040px) {
+      max-width: 52%;
+    }
+
+    @media (max-width: 780px) {
+      max-width: auto;
+    }
+
+
   }
 
   .pink-logo {
@@ -97,6 +114,10 @@ html {
     top: 50px;
     background-image: asset-url($leftCrowd);
     background-size: 100%;
+
+    @media (max-width: 780px) {
+      display: none;
+    }
   }
 
   #right-crowd {
@@ -107,6 +128,8 @@ html {
     top: 44px;
     background-image: asset-url($rightCrowd);
     background-size: 100%;
-  }
-}
 
+    @media (max-width: 780px) {
+      display: none;
+    }
+  }
