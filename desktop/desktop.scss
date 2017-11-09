@@ -141,7 +141,7 @@ html {
 // common/components/badges.scss
 
 .badge-wrapper.bullet {
-  line-height: 22px;
+  height: 22px;
   margin-top: 5px;
 
   span.badge-category {
@@ -149,6 +149,9 @@ html {
     z-index: 2;
     padding-left: 9px;
     padding-right: 9px;
+    position: relative;
+    line-height: 22px;
+    height: 22px;
   }
 
   .badge-category-parent-bg, .badge-category-bg {
