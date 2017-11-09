@@ -137,6 +137,39 @@ html {
   .fa-thumb-tack { color: #3b84f8; }
 }
 
+
+// common/components/badges.scss
+
+.badge-wrapper.bullet {
+  line-height: 22px;
+  margin-top: 5px;
+
+  span.badge-category {
+    color: #ffffff !important;
+    z-index: 2;
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .badge-category-parent-bg, .badge-category-bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    margin:0;
+    z-index: 1;
+  }
+
+  .category-dropdown-menu {
+    .badge-wrapper {
+      &.bullet {
+        padding: 0;
+        margin: 0;
+      }
+    }
+  }
+}
+
+
 // New elements added by theme
 
 #after-header {
@@ -220,35 +253,6 @@ html {
 
     @media (max-width: 780px) {
       display: none;
-    }
-  }
-}
-
-.badge-wrapper.bullet {
-  line-height: 22px;
-  margin-top: 5px;
-
-      span.badge-category {
-      color: #ffffff !important;
-      z-index: 2;
-      padding-left: 9px;
-      padding-right: 9px;
-    }
-
-   .badge-category-parent-bg, .badge-category-bg {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    margin:0;
-    z-index: 1;
-  }
-
-  .category-dropdown-menu {
-    .badge-wrapper {
-      &.bullet {
-        padding: 0;
-        margin: 0;
-      }
     }
   }
 }
