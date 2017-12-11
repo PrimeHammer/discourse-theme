@@ -1,0 +1,337 @@
+<div id="myz"></div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    myzmain();
+});
+    
+    //Credentials:
+    var APIURL = "https://api.myzmanim.com/engine1.json.aspx"
+    var APIUSER = "0008803299"
+    var APIKEY = "430aad583da78006a2568052a1d56c97fbd3ade56391a193f2c43e35c1056b6dbee172c272e1e3a0"
+
+    function myzmain() {
+        // Uncomment one of the following examples:
+
+        findPostal("10003");     //Typical US zip code
+        //findPostal("M6B2K9")   //Typical Canadian postal code
+        //findPostal("NW118AU")  //Typical UK postcode
+        //findPostal("90500")    //Typical 5-digit Israel Mikud code
+        //findPostal("JFK")      //Typical airport code
+        //findPostal("27526341") //Typical MyZmanim LocationID
+        //findGps(48.86413211779521324, 2.32941612345133754)   //Typical GPS coordinates
+    }
+
+
+    function findPostal(query) {
+        var clientTimeZone = getClientTimeZone();    // Pass the client's time zone. Optional, but if provided is sometimes used to resolve ambiguous queries.
+        var coding = "JS";
+        var params = "coding=" + coding + "&timezone=" + clientTimeZone + "&query=" + query + "&key=" + APIKEY + "&user=" + APIUSER;
+        var method = "searchPostal";
+        var url = APIURL + "/" + method;
+        doCall(url, params, findPostal_callback);
+    }
+    function findPostal_callback(response) {
+        var result = JSON.parse(response);
+        if (result.ErrMsg) {
+            document.write("Error: " + result.ErrMsg);
+            return;
+        }
+        displayZmanim(result.LocationID);
+    }
+
+
+    function findGps(latitude, longitude) {
+        var clientTimeZone = getClientTimeZone();    // Pass the client's time zone. Optional, but if provided is sometimes used to resolve ambiguous queries.
+        var coding = "JS";
+        var params = "coding=" + coding + "&latitude=" + latitude + "&longitude=" + longitude + "&key=" + APIKEY + "&user=" + APIUSER;
+        var method = "searchGps";
+        var url = APIURL + "/" + method;
+        doCall(url, params, findGps_callback);
+    }
+    function findGps_callback(response) {
+        var result = JSON.parse(response);
+        if (result.ErrMsg) {
+            document.write("Error: " + result.ErrMsg);
+            return;
+        }
+        displayZmanim(result.LocationID);
+    }
+
+
+    function displayZmanim(locationid) {
+        var today = new Date();
+        var method = "getDay";
+        var url = APIURL + "/" + method;
+        var params = "coding=JS&language=en&locationid=" + locationid + "&inputdate=" + formatDate(today) + "&key=" + APIKEY + "&user=" + APIUSER;
+        doCall(url, params, displayZmanim_callback);
+    }
+    function displayZmanim_callback(response) {
+        var day = JSON.parse(response);
+
+        if (day.ErrMsg) {
+            document.write("Error: " + day.ErrMsg);
+            return;
+        }
+
+        var out = "";
+        out += "SAMPLE USAGE";
+        out += "<br/>=========================";
+        out += "<div style='text-align:center;'>";
+        out += "    <span style='font-size:12pt;'>";
+        out += "    <br/>" + day.Place.Name;
+        out += "    <br/>" + day.Time.DateSemiLong;
+        out += "    <br/>" + day.Time.Weekday;
+        if (!zmanIsNull(day.Zman.CurrentTime)) out += "    <br/>" + formatZman(day.Zman.CurrentTime);    // Display current time if available and applicable.
+        if (day.Time.ParshaAndHoliday) out += "<br/>" + day.Time.ParshaAndHoliday;
+        if (day.Time.Omer != 0) out += "<br/>Omer count " + day.Time.Omer.ToString;
+        switch (day.Time.DaylightTime) {
+            case 0: out += "<br/>Standard Time"; break;
+            case 1: out += "<br/>Daylight Saving Time"; break;
+            case 2: out += "<br/>Add 1 hr for DST when applicable."; break;
+            case 3: out += "<br/>Add 1 hr for DST if/when applicable"; break;
+        }
+        out += "<br/>-----------";
+        out += "<br/>Dawn: " + formatZman(day.Zman.Dawn72);
+        out += "<br/>Earliest Talis (" + day.Place.YakirDegreesDefault + "&deg;): " + formatZman(day.Zman.YakirDefault);
+        out += "<br/>Sunrise: " + formatZman(day.Zman.SunriseDefault);
+        out += "<br/>Shema MA: " + formatZman(day.Zman.ShemaMA72);
+        out += "<br/>Shema Gra: " + formatZman(day.Zman.ShemaGra);
+        out += "<br/>Shachris Gra: " + formatZman(day.Zman.ShachrisGra);
+        out += "<br/>Midday: " + formatZman(day.Zman.Midday);
+        out += "<br/>Earliest Mincha: " + formatZman(day.Zman.MinchaStrict);
+        out += "<br/>Plag Hamincha: " + formatZman(day.Zman.PlagGra);
+        if (!zmanIsNull(day.Zman.Candles)) {
+            out += "<br/>Candlelighting (" + day.Place.CandlelightingMinutes + " min): " + formatZman(day.Zman.Candles);     // Display candlelighting time if available and applicable.
+        }
+        out += "<br/>Sunset: " + formatZman(day.Zman.SunsetDefault);
+        out += "<br/>Night 3 stars: " + formatZman(day.Zman.NightShabbos);
+        out += "<br/>Night 72 minutes: " + formatZman(day.Zman.Night72fix);
+        out += "<br/>";
+        out += "<br/>Minyan for Mincha at: " + formatZman(addMinutes(day.Zman.SunsetDefault, -20));
+        out += "<br/>";
+        out += "<br/>Powered by <a href='http://www.myzmanim.com/'>MyZmanim</a>";
+        out += "</div>";
+
+        out += "<br/>";
+        out += "<br/>MEMBERS ";
+        out += "<br/>=========================";
+        out += "<br/>Place.LocationID: " + day.Place.LocationID;
+        out += "<br/>Place.Name: " + day.Place.Name;
+        out += "<br/>Place.NameShort: " + day.Place.NameShort;
+        out += "<br/>Place.Country: " + day.Place.Country
+        out += "<br/>Place.State: " + day.Place.State;
+        out += "<br/>Place.County: " + day.Place.County;
+        out += "<br/>Place.City: " + day.Place.City;
+        out += "<br/>Place.PostalCode: " + day.Place.PostalCode;
+        out += "<br/>Place.DavenDirectionGC: " + day.Place.DavenDirectionGC;
+        out += "<br/>Place.DavenDirectionRL: " + day.Place.DavenDirectionRL;
+        out += "<br/>Place.CandlelightingMinutes: " + day.Place.CandlelightingMinutes;
+        out += "<br/>Place.YakirDegreesDefault: " + day.Place.YakirDegreesDefault;
+        out += "<br/>Place.ElevationObserver: " + day.Place.ElevationObserver;
+        out += "<br/>Place.ElevationWest: " + day.Place.ElevationWest;
+        out += "<br/>Place.ElevationEast: " + day.Place.ElevationEast;
+        out += "<br/>Place.ObservesDST: " + day.Place.ObservesDST;
+        out += "<br/>Place.AirportCode: " + day.Place.AirportCode;
+        out += "<br/>Place.CityHebrew: " + day.Place.CityHebrew;
+        out += "<br/>";
+        out += "<br/>Time.DateCivil: " + formatDate(day.Time.DateCivil);
+        out += "<br/>Time.DateCivilLong: " + day.Time.DateCivilLong;
+        out += "<br/>Time.DateJewish: " + day.Time.DateJewish;
+        out += "<br/>Time.DateJewishLong: " + day.Time.DateJewishLong;
+        out += "<br/>Time.DateJewishShort: " + day.Time.DateJewishShort;
+        out += "<br/>Time.DateFullLong: " + day.Time.DateFullLong;
+        out += "<br/>Time.DateFullShort: " + day.Time.DateFullShort;
+        out += "<br/>Time.DateSemiLong: " + day.Time.DateSemiLong;
+        out += "<br/>Time.DateSemiShort: " + day.Time.DateSemiShort;
+        out += "<br/>Time.Weekday: " + day.Time.Weekday;
+        out += "<br/>Time.WeekdayShort: " + day.Time.WeekdayShort;
+        out += "<br/>Time.Omer: " + day.Time.Omer;
+        out += "<br/>Time.DafYomiTract: " + day.Time.DafYomiTract;
+        out += "<br/>Time.DafYomiPage: " + day.Time.DafYomiPage;
+        out += "<br/>Time.DafYomi: " + day.Time.DafYomi;
+        out += "<br/>Time.DaylightTime: " + day.Time.DaylightTime;
+        out += "<br/>Time.Parsha: " + day.Time.Parsha;
+        out += "<br/>Time.ParshaShort: " + day.Time.ParshaShort;
+        out += "<br/>Time.Holiday: " + day.Time.Holiday;
+        out += "<br/>Time.HolidayShort: " + day.Time.HolidayShort;
+        out += "<br/>Time.ParshaAndHoliday: " + day.Time.ParshaAndHoliday;
+        out += "<br/>Time.TomorrowParsha: " + day.Time.TomorrowParsha;
+        out += "<br/>Time.TomorrowParshaOrHoliday: " + day.Time.TomorrowParshaOrHoliday;
+        out += "<br/>";
+        out += "<br/>Time.IsShabbos: " + day.Time.IsShabbos;
+        out += "<br/>Time.IsYomTov: " + day.Time.IsYomTov;
+        out += "<br/>Time.IsCholHamoed: " + day.Time.IsCholHamoed;
+        out += "<br/>Time.IsYomKipper: " + day.Time.IsYomKipper;
+        out += "<br/>Time.IsTishaBav: " + day.Time.IsTishaBav;
+        out += "<br/>Time.IsErevTishaBav: " + day.Time.IsErevTishaBav;
+        out += "<br/>Time.IsShivaAsarBitammuz: " + day.Time.IsShivaAsarBitammuz;
+        out += "<br/>Time.IsTaanisEsther: " + day.Time.IsTaanisEsther;
+        out += "<br/>Time.IsTzomGedalia: " + day.Time.IsTzomGedalia;
+        out += "<br/>Time.IsAsaraBiteves: " + day.Time.IsAsaraBiteves;
+        out += "<br/>Time.IsFastDay: " + day.Time.IsFastDay;
+        out += "<br/>Time.IsErevPesach: " + day.Time.IsErevPesach;
+        out += "<br/>Time.IsRoshChodesh: " + day.Time.IsRoshChodesh;
+        out += "<br/>Time.IsTuBeshvat: " + day.Time.IsTuBeshvat;
+        out += "<br/>Time.IsErevShabbos: " + day.Time.IsErevShabbos;
+        out += "<br/>Time.IsErevYomTov: " + day.Time.IsErevYomTov;
+        out += "<br/>Time.IsErevYomKipper: " + day.Time.IsErevYomKipper;
+        out += "<br/>Time.TonightIsYomTov: " + day.Time.TonightIsYomTov;
+        out += "<br/>Time.TomorrowNightIsYomTov: " + day.Time.TomorrowNightIsYomTov;
+        out += "<br/>";
+        out += "<br/>Zman.Dawn90: " + formatZman(day.Zman.Dawn90);
+        out += "<br/>Zman.Dawn72: " + formatZman(day.Zman.Dawn72);
+        out += "<br/>Zman.Dawn72fix: " + formatZman(day.Zman.Dawn72fix);
+        out += "<br/>Zman.DawnRMF: " + formatZman(day.Zman.DawnRMF);
+        out += "<br/>Zman.Yakir115: " + formatZman(day.Zman.Yakir115);
+        out += "<br/>Zman.Yakir110: " + formatZman(day.Zman.Yakir110);
+        out += "<br/>Zman.Yakir102: " + formatZman(day.Zman.Yakir102);
+        out += "<br/>Zman.YakirDefault: " + formatZman(day.Zman.YakirDefault);
+        out += "<br/>Zman.SunriseLevel: " + formatZman(day.Zman.SunriseLevel);
+        out += "<br/>Zman.SunriseElevated: " + formatZman(day.Zman.SunriseElevated);
+        out += "<br/>Zman.SunriseDefault: " + formatZman(day.Zman.SunriseDefault);
+        out += "<br/>Zman.ShemaBenIsh90ToFastTuc: " + formatZman(day.Zman.ShemaBenIsh90ToFastTuc);
+        out += "<br/>Zman.ShemaBenIsh72ToFastTuc: " + formatZman(day.Zman.ShemaBenIsh72ToFastTuc);
+        out += "<br/>Zman.ShemaBenIsh72ToShabbos: " + formatZman(day.Zman.ShemaBenIsh72ToShabbos);
+        out += "<br/>Zman.ShemaMA90: " + formatZman(day.Zman.ShemaMA90);
+        out += "<br/>Zman.ShemaMA72: " + formatZman(day.Zman.ShemaMA72);
+        out += "<br/>Zman.ShemaMA72fix: " + formatZman(day.Zman.ShemaMA72fix);
+        out += "<br/>Zman.ShemaGra: " + formatZman(day.Zman.ShemaGra);
+        out += "<br/>Zman.ShemaRMF: " + formatZman(day.Zman.ShemaRMF);
+        out += "<br/>Zman.ShachrisMA90: " + formatZman(day.Zman.ShachrisMA90);
+        out += "<br/>Zman.ShachrisMA72: " + formatZman(day.Zman.ShachrisMA72);
+        out += "<br/>Zman.ShachrisMA72fix: " + formatZman(day.Zman.ShachrisMA72fix);
+        out += "<br/>Zman.ShachrisGra: " + formatZman(day.Zman.ShachrisGra);
+        out += "<br/>Zman.ShachrisRMF: " + formatZman(day.Zman.ShachrisRMF);
+        out += "<br/>Zman.Midday: " + formatZman(day.Zman.Midday);
+        out += "<br/>Zman.MiddayRMF: " + formatZman(day.Zman.MiddayRMF);
+        out += "<br/>Zman.MinchaGra: " + formatZman(day.Zman.MinchaGra);
+        out += "<br/>Zman.Mincha30fix: " + formatZman(day.Zman.Mincha30fix);
+        out += "<br/>Zman.MinchaMA72fix: " + formatZman(day.Zman.MinchaMA72fix);
+        out += "<br/>Zman.MinchaStrict: " + formatZman(day.Zman.MinchaStrict);
+        out += "<br/>Zman.KetanaGra: " + formatZman(day.Zman.KetanaGra);
+        out += "<br/>Zman.KetanaMA72fix: " + formatZman(day.Zman.KetanaMA72fix);
+        out += "<br/>Zman.PlagGra: " + formatZman(day.Zman.PlagGra);
+        out += "<br/>Zman.PlagMA72fix: " + formatZman(day.Zman.PlagMA72fix);
+        out += "<br/>Zman.PlagBenIsh90ToFastTuc: " + formatZman(day.Zman.PlagBenIsh90ToFastTuc);
+        out += "<br/>Zman.PlagBenIsh72ToFastTuc: " + formatZman(day.Zman.PlagBenIsh72ToFastTuc);
+        out += "<br/>Zman.PlagBenIsh72ToShabbos: " + formatZman(day.Zman.PlagBenIsh72ToShabbos);
+        out += "<br/>Zman.SunsetLevel: " + formatZman(day.Zman.SunsetLevel);
+        out += "<br/>Zman.SunsetElevated: " + formatZman(day.Zman.SunsetElevated);
+        out += "<br/>Zman.SunsetDefault: " + formatZman(day.Zman.SunsetDefault);
+        out += "<br/>Zman.NightGra180: " + formatZman(day.Zman.NightGra180);
+        out += "<br/>Zman.NightGra225: " + formatZman(day.Zman.NightGra225);
+        out += "<br/>Zman.NightGra240: " + formatZman(day.Zman.NightGra240);
+        out += "<br/>Zman.NightZalman: " + formatZman(day.Zman.NightZalman);
+        out += "<br/>Zman.NightFastTuc: " + formatZman(day.Zman.NightFastTuc);
+        out += "<br/>Zman.NightFastRMF: " + formatZman(day.Zman.NightFastRMF);
+        out += "<br/>Zman.NightMoed: " + formatZman(day.Zman.NightMoed);
+        out += "<br/>Zman.NightShabbos: " + formatZman(day.Zman.NightShabbos);
+        out += "<br/>Zman.NightChazonIsh: " + formatZman(day.Zman.NightChazonIsh);
+        out += "<br/>Zman.Night50fix: " + formatZman(day.Zman.Night50fix);
+        out += "<br/>Zman.Night60fix: " + formatZman(day.Zman.Night60fix);
+        out += "<br/>Zman.Night72: " + formatZman(day.Zman.Night72);
+        out += "<br/>Zman.Night72fix: " + formatZman(day.Zman.Night72fix);
+        out += "<br/>Zman.Night72fixLevel: " + formatZman(day.Zman.Night72fixLevel);
+        out += "<br/>Zman.Night90: " + formatZman(day.Zman.Night90);
+        out += "<br/>Zman.Midnight: " + formatZman(day.Zman.Midnight);
+        out += "<br/>";
+        out += "<br/>Zman.ChametzEatGra: " + formatZman(day.Zman.ChametzEatGra);
+        out += "<br/>Zman.ChametzEatMA72: " + formatZman(day.Zman.ChametzEatMA72);
+        out += "<br/>Zman.ChametzEatMA72fix: " + formatZman(day.Zman.ChametzEatMA72fix);
+        out += "<br/>Zman.ChametzEatRMF: " + formatZman(day.Zman.ChametzEatRMF);
+        out += "<br/>Zman.ChametzBurnGra: " + formatZman(day.Zman.ChametzBurnGra);
+        out += "<br/>Zman.ChametzBurnMA72: " + formatZman(day.Zman.ChametzBurnMA72);
+        out += "<br/>Zman.ChametzBurnMA72fix: " + formatZman(day.Zman.ChametzBurnMA72fix);
+        out += "<br/>Zman.ChametzBurnRMF: " + formatZman(day.Zman.ChametzBurnRMF);
+        out += "<br/>";
+        out += "<br/>Zman.TomorrowNightShabbos: " + formatZman(day.Zman.TomorrowNightShabbos);
+        out += "<br/>Zman.TomorrowSunriseLevel: " + formatZman(day.Zman.TomorrowSunriseLevel);
+        out += "<br/>Zman.TomorrowSunriseElevated: " + formatZman(day.Zman.TomorrowSunriseElevated);
+        out += "<br/>Zman.TomorrowSunriseDefault: " + formatZman(day.Zman.TomorrowSunriseDefault);
+        out += "<br/>Zman.TomorrowSunsetLevel: " + formatZman(day.Zman.TomorrowSunsetLevel);
+        out += "<br/>Zman.TomorrowSunsetElevated: " + formatZman(day.Zman.TomorrowSunsetElevated);
+        out += "<br/>Zman.TomorrowSunsetDefault: " + formatZman(day.Zman.TomorrowSunsetDefault);
+        out += "<br/>Zman.TomorrowNight72fix: " + formatZman(day.Zman.TomorrowNight72fix);
+        out += "<br/>Zman.TomorrowNightChazonIsh: " + formatZman(day.Zman.TomorrowNightChazonIsh);
+        out += "<br/>Zman.Tomorrow2NightShabbos: " + formatZman(day.Zman.Tomorrow2NightShabbos);
+        out += "<br/>Zman.Tomorrow2SunsetLevel: " + formatZman(day.Zman.Tomorrow2SunsetLevel);
+        out += "<br/>Zman.Tomorrow2SunsetElevated: " + formatZman(day.Zman.Tomorrow2SunsetElevated);
+        out += "<br/>Zman.Tomorrow2SunsetDefault: " + formatZman(day.Zman.Tomorrow2SunsetDefault);
+        out += "<br/>Zman.Tomorrow2Night72fix: " + formatZman(day.Zman.Tomorrow2Night72fix);
+        out += "<br/>Zman.Tomorrow2NightChazonIsh: " + formatZman(day.Zman.Tomorrow2NightChazonIsh);
+        out += "<br/>";
+        out += "<br/>Zman.PropGra: " + ticksToMinutes(day.Zman.PropGra);
+        out += "<br/>Zman.PropMA72: " + ticksToMinutes(day.Zman.PropMA72);
+        out += "<br/>Zman.PropMA72fix: " + ticksToMinutes(day.Zman.PropMA72fix);
+        out += "<br/>Zman.PropMA90: " + ticksToMinutes(day.Zman.PropMA90);
+        out += "<br/>Zman.PropRmfMorning: " + ticksToMinutes(day.Zman.PropRmfMorning);
+        out += "<br/>Zman.PropBenIsh90ToFastTuc: " + ticksToMinutes(day.Zman.PropBenIsh90ToFastTuc);
+        out += "<br/>Zman.PropBenIsh72ToFastTuc: " + ticksToMinutes(day.Zman.PropBenIsh72ToFastTuc);
+        out += "<br/>Zman.PropBenIsh72ToShabbos: " + ticksToMinutes(day.Zman.PropBenIsh72ToShabbos);
+        out += "<br/>";
+        out += "<br/>" + day.Copyright;
+        out += "</body>";
+        out += "</html>";
+
+        document.getElementById("myz").innerHTML = out;
+
+    }
+
+    function addMinutes(date, minutes) {
+        var newdate = new Date(date);
+        return new Date(newdate.getTime() + (minutes * 60000));
+    }
+
+    function ticksToMinutes(ticks) {
+        sec = ticks * 1 / 10000000;
+        min = sec / 60;
+        min = round(min);
+        return min;
+    }
+
+    function doCall(endpoint, parameters, callBack) {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) { callBack(xmlhttp.responseText); }
+        }
+        xmlhttp.open("POST", endpoint, true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send(parameters);
+    }
+
+    function formatDate(date) {
+        var newdate = new Date(date);
+        var strdate = newdate.toISOString();
+        strdate = strdate.substring(0, 10);
+        return strdate;
+    }
+
+    function formatZman(zman) {
+        d = new Date(zman);
+        var hr = d.getUTCHours();
+        var min = d.getUTCMinutes();
+        var sec = d.getUTCSeconds();
+        if (min < 10) {
+            min = "0" + min;
+        }
+        if (sec < 10) {
+            sec = "0" + sec;
+        }
+        var ampm = hr < 12 ? " AM" : " PM";
+        if (hr == 0) hr = 12;
+        if (hr > 12) hr -= 12;
+        var result = hr + ":" + min
+        if (sec > 0) result += ":" + sec;
+        result += ampm;
+        return result
+    }
+
+    function getClientTimeZone() {
+        var d = new Date();
+        var tz = d.getTimezoneOffset() / 60;
+        return tz;
+    }
+    
+    function round(num) { return parseFloat(num).toFixed(1); }
+    function zmanIsNull(zman) { return formatDate(zman) == "0001-01-01"; }
+</script>
