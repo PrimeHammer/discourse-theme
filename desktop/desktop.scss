@@ -141,6 +141,8 @@ html {
 }
 
 
+// HACK for category badges
+
 // common/components/badges.scss
 
 .badge-wrapper.bullet {
@@ -170,6 +172,15 @@ html {
   padding: 0;
   margin: 0;
 }
+
+
+// common/base/topic.scss
+
+#suggested-topics h3 .badge-wrapper.bullet span.badge-category {
+  line-height: 1.0;
+}
+
+// end of HACK for categary badges
 
 
 // New elements added by theme
