@@ -271,18 +271,32 @@ html {
 // Top Nav above the discourse header
 //-------------------------------------------
 
-.topnav{
+.topnav {
   width: 100%;
   height: 75px;
   background-color: #3b84f8;
+
+  .brand-logo { 
+    height: 50px;
+    width: 120px;
+    display: block;
+    background-image: asset-url($pit-logo-white);
+    margin: 15px 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .topnav-panel {
+    float: right;
+    
+    .topnav-donate {
+      background: red;
+    }
+
+    div {
+      display: block;
+    }
+  }
 }
 
-.brand-logo{ 
-  height: 50px;
-  width: 120px;
-  display: block;
-  background-image: asset-url($pit-logo-white);
-  margin: 15px 0;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
+
