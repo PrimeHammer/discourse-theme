@@ -289,8 +289,17 @@ html {
   .topnav-panel {
     float: right;
     
-    .topnav-donate {
-      background: red;
+    a.topnav-donate {
+      background: #ff5495;
+    }
+
+    a.topnav-link, a.topnav-link:visited  {
+      color: white;
+      padding-top: 26px;
+      padding-right: 25px;
+      font-size: 16px;
+      display: block;
+      float: left;
     }
 
     div {
