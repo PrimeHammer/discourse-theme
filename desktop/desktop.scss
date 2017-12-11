@@ -111,19 +111,18 @@ html {
       font-weight: normal;
       color: #222;
     }
-
-    .more-topics,
-    .no-topics {
-      td {
-        padding-right: 14px;
-      }
-    }
   }
 }
 
 // desktop/latest-topic-list.scss
 .latest-topic-list-item .topic-stats .badge-posts {
   color: #222;
+}
+
+.latest-topic-list {
+  .no-topics, .more-topics {
+    padding-right: 14px;
+  }
 }
 
 // desktop/topic-list.scss
