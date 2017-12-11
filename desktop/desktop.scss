@@ -37,7 +37,7 @@
 }
 
 #main-outlet {
-  padding-top: 96px + 3px + 16px;
+  padding-top: 96px;
   background-color: #fff;
 }
 
@@ -279,8 +279,10 @@ html {
 
 .brand-logo{ 
   height: 50px;
-  width: 80px;
+  width: 120px;
   display: block;
   background-image: asset-url($pit-logo-white);
   margin: 15px 0;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
