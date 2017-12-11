@@ -192,7 +192,7 @@ html {
     padding-top: 47px;
     padding-bottom: 47px;
     text-align: center;
-    max-width: 660px;
+    max-width: 575px;
     margin: 0 auto;
     padding-left: 8px;
     padding-right: 8px;
@@ -228,14 +228,16 @@ html {
     margin-top: 19px;
     font-size: 18px;
     font-weight: 900;
-    color: #282c32;
+    font-style: italic;
+    color: #999;
   }
 
   h3 {
-    margin-top: 19px;
+    margin-top: 23px;
     font-size: 18px;
     font-weight: 500;
-    color: #282c32;
+    color: #919191;
+    line-height: 23px;
   }
 
   #left-crowd {
