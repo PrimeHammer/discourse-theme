@@ -338,3 +338,22 @@ html {
   }
 }
 
+// Hide the site sometimes...
+.snooze {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #f0fafe;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  .snooze-card {
+    position: relative;
+    width: 75%;
+    height: 75%;
+    left: 25%;
+    background-image: asset_url('$pit-snooze-bg');
+    background-color: #fff;
+  }
+}

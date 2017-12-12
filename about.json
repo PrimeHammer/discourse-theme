@@ -6,6 +6,8 @@
         "pinkLogo": "assets/pink-logo.png",
         "leftCrowd": "assets/left-crowd.png",
         "rightCrowd": "assets/right-crowd.png",
-        "pit-logo-white": "assets/pit-logo-white.png"
+        "pit-logo-white": "assets/pit-logo-white.png",
+        "pit-snooze-bg": "assets/pit-snooze-bg.png",
+        "pit-snooze-mobile-bg": "assets/pit-snooze-mobile-bg.png"
    }
 }
