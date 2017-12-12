@@ -349,6 +349,7 @@ html {
   left: 0;
   bottom: 0;
   z-index: 10000;
+  text-align: center;
 
   .snooze-card {
     position: relative;
@@ -359,5 +360,17 @@ html {
     background-repeat: no-repeat;
     background-size: 100%;
     margin: 0 auto 0 auto;
+  }
+
+  .snooze-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .snooze-card-text {
+    font-size: 12px;
+    font-weight: normal;
+    color: #ccc;
   }
 }
