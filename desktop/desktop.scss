@@ -353,7 +353,7 @@ html {
     width: 75%;
     height: 75%;
     left: 25%;
-    background-image: asset_url('$pit-snooze-bg');
+    background-image: asset_url($pit-snooze-bg);
     background-color: #fff;
   }
 }
