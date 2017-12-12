@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("snooze").style.display = "block";
         }
 
-        if (true) {
+        if (day.Time.isShabbos) {
             document.getElementById("snooze-reason").innerHTML = "Shabbat";
             document.getElementById("snooze-return").innerHTML = "Please return back after Shabbat";
         }
