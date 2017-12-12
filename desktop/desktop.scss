@@ -351,12 +351,13 @@ html {
 
   .snooze-card {
     position: fixed;
-    width: 50%;
-    height: 100%;
-    left: 25%;
+    width: 512px;
+    height: 1000px;
     background-image: asset_url($pit-snooze-bg);
-    top: 0px;
+    top: 100px;
     background-repeat: no-repeat;
     background-size: 100%;
+    margin-top: 0;
+    margin: 25px 0 0 0;
   }
 }
