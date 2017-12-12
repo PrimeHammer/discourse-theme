@@ -353,24 +353,28 @@ html {
 
   .snooze-card {
     position: relative;
-    width: 512px;
+    width: 620px;
     height: 1000px;
     background-image: asset_url($pit-snooze-bg);
     top: 20%;
     background-repeat: no-repeat;
     background-size: 100%;
     margin: 0 auto 0 auto;
+    left: -20px;
   }
 
   .snooze-card-title {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     color: #333;
+    padding: 240px 0 0 40px;
   }
 
   .snooze-card-text {
     font-size: 12px;
     font-weight: normal;
+    font-style: italic;
     color: #ccc;
+    padding: 10px 0 0 40px;
   }
 }
