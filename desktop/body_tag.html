@@ -1,7 +1,7 @@
 <div id="myz"></div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // myzmain();
+    myzmain();
 });
     
     //Credentials:
@@ -73,6 +73,15 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
+        if day.Time.isShabbos || day.Time.IsYomTov || day.Time.IsYomKipper {
+            document.getElementById("snooze").style.display = "block";
+        }
+
+        if true {
+            document.getElementById("snooze").style.display = "block";
+        }
+
+        /*
         var out = "";
         out += "SAMPLE USAGE";
         out += "<br/>=========================";
@@ -272,8 +281,8 @@ document.addEventListener('DOMContentLoaded', function () {
         out += "<br/>" + day.Copyright;
         out += "</body>";
         out += "</html>";
-
         document.getElementById("myz").innerHTML = out;
+        */
 
     }
 
