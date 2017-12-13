@@ -1,8 +1,9 @@
 <div id="myz"></div>
-<script src="http://freegeoip.net/json/?callback=geoip"></script>
+<script src="https://www.google.com/jsapi"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    myzmain();
+    console.log("location found: " + google.loader.ClientLocation.latitude + " " + google.loader.ClientLocation.latitude);
+    findGps(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
 });
     
     //Credentials:
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function myzmain() {
         // Uncomment one of the following examples:
 
-        findPostal("10003");     //Typical US zip code
+        // findPostal("10003");     //Typical US zip code
         //findPostal("M6B2K9")   //Typical Canadian postal code
         //findPostal("NW118AU")  //Typical UK postcode
         //findPostal("90500")    //Typical 5-digit Israel Mikud code
