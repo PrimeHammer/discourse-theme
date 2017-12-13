@@ -2,7 +2,7 @@
 <script src="https://www.google.com/jsapi"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("location found: " + google.loader.ClientLocation.latitude + " " + google.loader.ClientLocation.latitude);
+    console.log("location found: " + google.loader.ClientLocation.latitude + " " + google.loader.ClientLocation.longitude);
     findGps(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
 });
     
@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function findGps_callback(response) {
         var result = JSON.parse(response);
+        console.log(result);
         if (result.ErrMsg) {
             document.write("Error: " + result.ErrMsg);
             return;
