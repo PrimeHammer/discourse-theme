@@ -1,4 +1,5 @@
 <div id="myz"></div>
+<script src="http://freegeoip.net/json/?callback=geoip"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     myzmain();
@@ -8,6 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var APIURL = "https://api.myzmanim.com/engine1.json.aspx"
     var APIUSER = "0008803299"
     var APIKEY = "430aad583da78006a2568052a1d56c97fbd3ade56391a193f2c43e35c1056b6dbee172c272e1e3a0"
+
+    function geoip(response) {
+        geo = JSON.parse(response);
+        console.log(geo);
+    }
 
     function myzmain() {
         // Uncomment one of the following examples:
