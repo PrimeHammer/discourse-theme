@@ -266,6 +266,7 @@ html {
   h1 {
     margin-top: 23px;
     font-size: 36px;
+    font-weight: normal;
     line-height: 40px;
     color: #282c32;
   }
@@ -273,7 +274,7 @@ html {
   h2 {
     margin-top: 19px;
     font-size: 18px;
-    font-weight: 900;
+    font-weight: normal;
     font-style: italic;
     color: #282c32;
   }
@@ -281,7 +282,7 @@ html {
   h3 {
     margin-top: 23px;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: normal;
     color: #919191;
     line-height: 23px;
   }
