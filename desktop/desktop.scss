@@ -135,11 +135,16 @@ html {
   margin: 10px, 25px, 15px, 0;
 }
 
+.category-list .category-name {
+  font-family: "mr-eaves-xl-modern",sans-serif;
+  font-weight: bold;
+}
 .category-list .category-description {
   margin-top: 10px;
   font-size: 16px;
   letter-spacing: 0.02em;
   line-height: 1.5em;
+  font-family: "mr-eaves-xl-modern",sans-serif;
 }
 
 
@@ -204,7 +209,8 @@ html {
   position: relative;
   margin-bottom: 16px;
   margin-top: -16px;
-
+  font-family: "myriad-pro",sans-serif;
+  
   @media (max-width: 780px) {
     height: auto;
   }
@@ -241,7 +247,6 @@ html {
     margin-top: 23px;
     font-size: 36px;
     line-height: 40px;
-    font-weight: bold;
     color: #282c32;
   }
 
