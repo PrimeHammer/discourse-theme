@@ -125,6 +125,14 @@ html {
   .no-topics, .more-topics {
     padding-right: 14px;
   }
+
+  .title {
+    font-family: "mr-eaves-xl-modern",sans-serif;
+    font-weight: bold;
+    padding: 0 0 10px 0;
+    font-size: 18px;
+    color: #282c32;
+  }
 }
 
 // desktop/topic-list.scss
@@ -140,12 +148,14 @@ html {
   font-weight: bold;
   text-transform: uppercase;
   display: block;
-  padding: 10px 0;
+  padding: 0 0 10px 0;
+  font-size: 20px;
+  color: #282c32;
 }
 
 .category-list .category-description {
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.02em;
   line-height: 1.5em;
   font-family: "mr-eaves-xl-modern",sans-serif;
