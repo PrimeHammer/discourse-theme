@@ -133,6 +133,9 @@ html {
     font-size: 18px;
     color: #282c32;
   }
+  .title:visited {
+    color: #383c42;
+  }
 }
 
 // desktop/topic-list.scss
@@ -160,7 +163,10 @@ html {
   line-height: 1.5em;
   font-family: "mr-eaves-xl-modern",sans-serif;
 }
-
+// lock icon on private stuff
+.category-list tbody .category h3 .fa {
+  float: left;
+}
 
 
 // Base list
