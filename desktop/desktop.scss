@@ -138,7 +138,11 @@ html {
 .category-list .category-name {
   font-family: "mr-eaves-xl-modern",sans-serif;
   font-weight: bold;
+  text-transform: uppercase;
+  display: block;
+  padding: 10px 0;
 }
+
 .category-list .category-description {
   margin-top: 10px;
   font-size: 16px;
@@ -210,7 +214,7 @@ html {
   margin-bottom: 16px;
   margin-top: -16px;
   font-family: "myriad-pro",sans-serif;
-  
+
   @media (max-width: 780px) {
     height: auto;
   }
