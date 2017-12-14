@@ -11,11 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var APIUSER = "0008803299"
     var APIKEY = "430aad583da78006a2568052a1d56c97fbd3ade56391a193f2c43e35c1056b6dbee172c272e1e3a0"
 
-    function geoip(response) {
-        geo = JSON.parse(response);
-        console.log(geo);
-    }
-
     function myzmain() {
         // Uncomment one of the following examples:
 
@@ -57,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function findGps_callback(response) {
         var result = JSON.parse(response);
-        console.log(result);
+        //console.log(result);
         if (result.ErrMsg) {
             document.write("Error: " + result.ErrMsg);
             return;

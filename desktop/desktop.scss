@@ -128,7 +128,16 @@ html {
 // desktop/topic-list.scss
 
 .category-logo {
+  max-height: 100px;
+  float: left;
+  margin: 10px, 25px, 15px, 0;
+}
+
+.category-list .category-description {
   margin-top: 10px;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  line-height: 1.5em;
 }
 
 
